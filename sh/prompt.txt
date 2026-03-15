@@ -1,0 +1,1 @@
+<img>/home/xiarui/nas/projects/AIPhoto/Evaluate/raw/PhotoBench-v1/test9__1284AND1712.jpeg<hw>336,336</hw></img>介绍一下图片里的内容

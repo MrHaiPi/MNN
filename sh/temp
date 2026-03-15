@@ -1,0 +1,6 @@
+curl http://localhost:8000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "qwen3-1.8b",
+    "messages": [{"role": "user", "content": "你好！"}]
+  }'

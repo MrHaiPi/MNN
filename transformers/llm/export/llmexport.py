@@ -124,6 +124,7 @@ class LlmExporter(torch.nn.Module):
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": query}
         ]
+<<<<<<< Updated upstream
         prompt = self.tokenizer.apply_chat_template(messages)
         if query not in prompt:
             prompt = query
@@ -153,6 +154,27 @@ class LlmExporter(torch.nn.Module):
                 deepstack_embeds=deepstack_embeds
             )
 
+=======
+        prompt = self.build_prompt(messages)
+        print("prompt:\n", prompt)
+        print("response:\n")
+        input_ids = self.str_to_ids(prompt)
+        self.seq_len = input_ids.numel()
+        self.context_len = self.seq_len - 2
+        self.token_len = 0
+        past_key_values = [None for i in range(self.num_hidden_layers)]
+        token_id = input_ids
+        while self.token_len < self.max_length:
+            attention_mask = self.get_attention_mask()
+            position_ids = self.get_position_ids(token_id)
+            input_ids = self.embedding(token_id)
+            deepstack_embeds = self.visual.deepstacks() if self.visual is not None else None
+            logits, _, past_key_values, _ = self.forward(input_ids,
+                                                      attention_mask,
+                                                      position_ids,
+                                                      past_key_values,
+                                                      deepstack_embeds = deepstack_embeds)
+>>>>>>> Stashed changes
             token_id = torch.argmax(logits[:,-1,:])
             seq_len += 1
             new_tokens += 1
